@@ -4,13 +4,13 @@
 #include <conio.h>
 #include <windows.h>
 
-void cores(int ForgC, int BackC){ 															//cor do texto
+void cores(int ForgC, int BackC){ 										//cor do texto
      WORD wColor = ((BackC & 0x0F) << 4) + (ForgC & 0x0F);;
      SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), wColor);
      return;
 }
 
-void textcolor(int newcolor){ 																//cor do texto
+void textcolor(int newcolor){ 											//cor do texto
    CONSOLE_SCREEN_BUFFER_INFO csbi;
    GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),
@@ -20,19 +20,19 @@ void textcolor(int newcolor){ 																//cor do texto
 FILE* AbreArquivo(char modo, char caminho[30]){
     FILE *arquivo;
     switch(modo){
-        case 'g': 																			//Puxa informação
+        case 'g': 														//Puxa informação
             arquivo = fopen(caminho,"wb");
             break;
-        case 'l': 																			//Somente leitura
+        case 'l': 														//Somente leitura
             arquivo = fopen(caminho,"r");
             break;
-        case 'a': 																			//Escreve
+        case 'a': 														//Escreve
             arquivo = fopen(caminho,"a");
             break;
-        case 'w':  																			//Lipar tudo
+        case 'w':  														//Lipar tudo
         	arquivo = fopen(caminho, "w");
     }
-    if(arquivo==NULL){  																	//Caso não haja texto
+    if(arquivo==NULL){  												//Caso não haja texto
     	textcolor(12);
         printf("Arquivo Vazio ou com Problema");
         textcolor(15);
@@ -48,7 +48,7 @@ void FecharArquivo(FILE *arquivo){
 void Cadastra(char nome[30], int num){
     FILE *arquivo;
     arquivo = AbreArquivo('a', "vendas.txt");
-    fprintf(arquivo, "%s\n%d\n", nome, num);  												//Escreve no arquivo e quebra linha
+    fprintf(arquivo, "%s\n%d\n", nome, num);  							//Escreve no arquivo e quebra linha
     FecharArquivo(arquivo);
 }
 
@@ -59,9 +59,9 @@ void Listar(){
 
     arquivo = AbreArquivo('l',"vendas.txt");
 
-    while(!feof(arquivo)){  																//Enquanto haver elementos no arquivo
-        fscanf(arquivo,"%[^\n] %d ", &nome, &num);  										//Imprime ate \n
-        if(num == 0){  												  						//Evitar o erro da sujeira na lista
+    while(!feof(arquivo)){  											//Enquanto haver elementos no arquivo
+        fscanf(arquivo,"%[^\n] %d ", &nome, &num);  					//Imprime ate \n
+        if(num == 0){  												  	//Evitar o erro da sujeira na lista
         	printf("Lista Vazia...\n");
 			strcpy(nome, " ");
 		}else{
